@@ -97,6 +97,7 @@ Masukan name server pada tiap node
 `echo nameserver 192.168.122.1 > /etc/resolv.conf`
 
 Lakukan `ping google.com` pada salah satu node
+
 ![image](images/1-2.png)
 
 ## Soal 2
@@ -130,6 +131,7 @@ copy file db.local pada path /etc/bind ke root WISE
 `cp /etc/bind/db.local wise.f11.com`
 
 lalu edit isinya
+
 ![image](images/2-3.png)
 
 kemudian copy ke /etc/bind/wise/wise.f11.com
@@ -139,7 +141,28 @@ kemudian copy ke /etc/bind/wise/wise.f11.com
 lakukan `service bind9 restart`
 
 pada node SSS dan Garden ganti nameserver pada `/etc/resolv.conf` menjadi IP WISE
+
 `echo nameserver 10.34.2.2 > /etc/resolv.conf` dan `echo nameserver 10.34.3.2 >> /etc/resolv.conf`
 
 lalu lakukan `ping www.wise.f11.com` pada SSS
+
 ![image](images/2-4.png)
+
+
+## Soal 3
+
+### Soal
+Setelah itu ia juga ingin membuat subdomain eden.wise.yyy.com dengan alias www.eden.wise.yyy.com yang diatur DNS-nya di WISE dan mengarah ke Eden
+
+### Jawaban
+Edit lagi file `wise.f11.com` pada root WISE dan tambahkan 2 line baru
+
+![image](images/3-1.png)
+
+kemudian copy ke /etc/bind/wise/wise.f11.com
+
+`cp wise.f11.com /etc/bind/wise/wise.f11.com`
+
+restart bind9, lakukan ping ke domain baru `ping eden.wise.f11.com -c 3` atau `ping www.eden.wise.f11.com -c 3`
+
+![image](images/3-2.png)
