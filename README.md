@@ -169,7 +169,7 @@ restart bind9, lakukan ping ke domain baru
 
 ![image](images/3-2.png)
 
-## Soal 3
+## Soal 4
 
 ### Soal
 Buat juga reverse domain untuk domain utama
@@ -198,3 +198,53 @@ kemudian copy ke /etc/bind/wise/2.34.10.in-addr.arpa
 restart bind9, lakukan `host -t PTR 10.34.2.2`
 
 ![image](images/4-3.png)
+
+## Soal 5
+
+### Soal
+Agar dapat tetap dihubungi jika server WISE bermasalah, buatlah juga Berlint sebagai DNS Slave untuk domain utama
+
+### Jawaban
+Sudah dibuat pada nomor 2, kemudian coba matikan node WISE
+
+![image](images/5-1.png)
+
+dan lakukan `ping wise.f11.com` pada node SSS
+
+![image](images/5-2.png)
+
+## Soal 6
+
+### Soal
+Karena banyak informasi dari Handler, buatlah subdomain yang khusus untuk operation yaitu operation.wise.yyy.com dengan alias www.operation.wise.yyy.com yang didelegasikan dari WISE ke Berlint dengan IP menuju ke Eden dalam folder operation
+
+### Jawaban
+Edit lagi file `wise.f11.com` pada root WISE dan tambahkan
+
+![image](images/6-1.png)
+
+lalu copy kembali ke /etc/bind/wise/wise.f11.com, Kemudian pada root Berlint edit file `named.conf.local` tambahkan
+
+![image](images/6-2.png)
+
+lalu copy lagi ke /etc/bind/named.conf.local
+
+Kemudian pada node Berlint buat direktori dengan nama operation
+
+`mkdir /etc/bind/operation`
+
+Copy lagi file pada `/etc/bind/db.local` ke root Berlint
+
+`cp /etc/bind/db.local operation.wise.f11.com`
+
+lalu ubah file menjadi
+
+![image](images/6-3.png)
+
+copy kan ke `/etc/bind/operation/operation.wise.f11.com`
+
+`cp operation.wise.f11.com /etc/bind/operation/operation.wise.f11.com`
+
+restart bind9 pada WISE dan Berlint, lakukan ping ke `operation.wise.f11.com` dan `www.operation.wise.f11.com`
+
+![image](images/6-4.png)
