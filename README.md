@@ -163,6 +163,38 @@ kemudian copy ke /etc/bind/wise/wise.f11.com
 
 `cp wise.f11.com /etc/bind/wise/wise.f11.com`
 
-restart bind9, lakukan ping ke domain baru `ping eden.wise.f11.com -c 3` atau `ping www.eden.wise.f11.com -c 3`
+restart bind9, lakukan ping ke domain baru
+
+`ping eden.wise.f11.com` atau `ping www.eden.wise.f11.com`
 
 ![image](images/3-2.png)
+
+## Soal 3
+
+### Soal
+Buat juga reverse domain untuk domain utama
+
+### Jawaban
+Edit lagi file `named.conf.local` pada root WISE dan tambahkan
+
+![image](images/4-1.png)
+
+kemudian copy lagi ke /etc/bind/named.conf.local
+
+`cp named.conf.local /etc/bind/named.conf.local`
+
+Copy lagi file pada `/etc/bind/db.local` ke root WISE
+
+`cp /etc/bind/db.local 2.34.10.in-addr.arpa`
+
+lalu ubah isinya menjadi
+
+![image](images/4-2.png)
+
+kemudian copy ke /etc/bind/wise/2.34.10.in-addr.arpa
+
+`cp 2.34.10.in-addr.arpa /etc/bind/wise/2.34.10.in-addr.arpa`
+
+restart bind9, lakukan `host -t PTR 10.34.2.2`
+
+![image](images/4-3.png)
