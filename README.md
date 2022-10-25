@@ -104,10 +104,17 @@ file `script.sh` pada root tiap node
     apt-get install libapache2-mod-php7.0
 
     service apache2 start
+    htpasswd -b -c /etc/apache2/.htpasswd Twilight opStrix
+    
     cp webserver/wise.f11.com.conf /etc/apache2/sites-available
     cp webserver/eden.wise.f11.com.conf /etc/apache2/sites-available
+    cp webserver/strix.operation.wise.f11.com-15000.conf /etc/apache2/sites-available/
+    cp webserver/strix.operation.wise.f11.com-15500.conf /etc/apache2/sites-available/
+
     a2ensite wise.f11.com
     a2ensite eden.wise.f11.com
+    a2ensite strix.operation.wise.f11.com-15000.conf
+    a2ensite strix.operation.wise.f11.com-15000.conf
 
     service apache2 restart
 
@@ -465,7 +472,7 @@ restart apache, kemudian pada node SSS jalankan `lynx http://wise.f11.com/home`
 Setelah itu, pada subdomain www.eden.wise.yyy.com, Loid membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/eden.wise.yyy.com
 
 ### Jawaban
-Copy file `wise.f11.com.conf` pada folder webserver dengan nama `eden.wise.f11.com.conf`
+Pada node Eden copy file `wise.f11.com.conf` pada folder webserver dengan nama `eden.wise.f11.com.conf`
 
 `cp webserver/wise.f11.com.conf webserver/eden.wise.f11.com.conf`
 
@@ -493,7 +500,7 @@ Pada node SSS jalankan `lynx www.eden.wise.f11.com`
 Akan tetapi, pada folder /public, Loid ingin hanya dapat melakukan directory listing saja
 
 ### Jawaban
-Edit file `webserver/eden.wise.f11.com.conf`
+Pada node Eden edit file `webserver/eden.wise.f11.com.conf`
 
 ![image](images/11-1.png)
 
@@ -509,7 +516,7 @@ restart apache, pada node SSS jalankan `lynx www.eden.wise.f11.com`
 Tidak hanya itu, Loid juga ingin menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache
 
 ### Jawaban
-Edit lagi file `webserver/eden.wise.f11.com.conf`
+Pada node Eden edit lagi file `webserver/eden.wise.f11.com.conf`
 
 ![image](images/12-1.png)
 
@@ -520,3 +527,82 @@ restart apache, pada node SSS jalankan dengan akhiran sembarang
 ![image](images/12-3.png)
 
 ![image](images/12-2.png)
+
+## Soal 13
+
+### Soal
+Loid juga meminta Franky untuk dibuatkan konfigurasi virtual host. Virtual host ini bertujuan untuk dapat mengakses file asset www.eden.wise.yyy.com/public/js menjadi www.eden.wise.yyy.com/js
+
+### Jawaban
+Pada node Eden edit lagi file `webserver/eden.wise.f11.com.conf`
+
+![image](images/13-1.png)
+
+copy lagi ke /etc/apache2/sites-available/eden.wise.f11.com.conf
+
+restart apache, jalankan pada node SSS
+
+`lynx www.eden.wise.f11.com/js`
+
+![image](images/13-2.png)
+
+## Soal 14
+
+### Soal
+Loid meminta agar www.strix.operation.wise.yyy.com hanya bisa diakses dengan
+port 15000 dan port 15500
+
+### Jawaban
+Untuk port 15000, buat file config baru dengan nama `strix.operation.wise.f11.com-15000.conf`
+
+`cp /etc/apache2/sites-available/000-default.conf webserver/strix.operation.wise.f11.com-15000.conf`
+
+lalu edit filenya
+
+![image](images/14-1.png)
+
+lalu copy ke `/etc/apache2/sites-available/`
+
+`cp webserver/strix.operation.wise.f11.com-15000.conf /etc/apache2/sites-available/`
+
+Buat juga untuk port 15500.
+
+Pada file `/etc/apache2/ports.conf` tambahkan listen port 15000 dan 15500
+
+![image](images/14-2.png)
+
+a2ensite kedua config, `a2ensite strix.operation.wise.f11.com-15000.conf` dan `a2ensite strix.operation.wise.f11.com-15500.conf`
+
+restart apache, jalankan pada node SSS
+
+`lynx www.strix.operation.wise.f11.com:15000`/`lynx www.strix.operation.wise.f11.com:15500`
+
+![image](images/14-3.png)
+
+## Soal 14
+
+### Soal
+dengan autentikasi username Twilight dan password opStrix dan file di /var/www/strix.operation.wise.yyy
+
+### Jawaban
+bikin password dengan
+
+`htpasswd -b -c /etc/apache2/.htpasswd Twilight  opStrix`
+
+![image](images/15-1.png)
+
+lalu edit config pada `strix.operation.wise.f11.com-15000.conf` dan `strix.operation.wise.f11.com-15500.conf`
+
+![image](images/15-2.png)
+
+restart apache, jalankan pada node SSS
+
+`lynx www.strix.operation.wise.f11.com:15000`/`lynx www.strix.operation.wise.f11.com:15500`
+
+maka akan diminta untuk memasukkan username dan password
+
+![image](images/15-3.png)
+
+masukkan username Twilight dan password opStrix
+
+![image](images/15-4.png)
