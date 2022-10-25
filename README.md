@@ -23,10 +23,13 @@ file `script.sh` pada root tiap node
 
     ```bash
     #!/bin/bash
+
     echo nameserver 192.168.122.1 > /etc/resolv.conf
+
     apt-get update
     apt-get install lynx -y
     apt-get install nano -y
+
     echo nameserver 10.34.2.2 > /etc/resolv.conf
     echo nameserver 10.34.3.2 >> /etc/resolv.conf
     ```
@@ -35,8 +38,11 @@ file `script.sh` pada root tiap node
 
     ```bash
     #!/bin/bash
+
     echo nameserver 192.168.122.1 > /etc/resolv.conf
+
     apt-get install nano -y
+
     echo nameserver 10.34.2.2 > /etc/resolv.conf
     echo nameserver 10.34.3.2 > /etc/resolv.conf
     ```
@@ -46,13 +52,17 @@ file `script.sh` pada root tiap node
     ```bash
     #!/bin/bash
     echo nameserver 192.168.122.1 > /etc/resolv.conf
+
     apt-get update
     apt-get install bind9 -y
     apt-get install nano -y
+
     mkdir /etc/bind/wise
+
     cp named.conf.local /etc/bind/named.conf.local
     cp wise.f11.com /etc/bind/wise/wise.f11.com
     cp 2.34.10.in-addr.arpa /etc/bind/wise/2.34.10.in-addr.arpa
+
     service bind9 restart
     ```
 
@@ -60,13 +70,18 @@ file `script.sh` pada root tiap node
 
     ```bash
     #!/bin/bash
+
     echo nameserver 192.168.122.1 > /etc/resolv.conf
+
     apt-get update
     apt-get install bind9 -y
     apt-get install nano -y
+
     mkdir /etc/bind/operation
+
     cp named.conf.local /etc/bind/named.conf.local
     cp operation.wise.f11.com /etc/bind/operation/operation.wise.f11.com
+
     service bind9 restart
     ```
 
@@ -333,3 +348,55 @@ copy kembali ke `/etc/bind/operation/operation.wise.f11.com`
 restart bind9, lakukan ping ke `strix.operation.wise.f11.com` dan `www.strix.operation.wise.f11.com`
 
 ![image](images/7-2.png)
+
+## Soal 8
+
+### Soal
+Setelah melakukan konfigurasi server, maka dilakukan konfigurasi Webserver. Pertama dengan webserver www.wise.yyy.com. Pertama, Loid membutuhkan webserver dengan DocumentRoot pada /var/www/wise.yyy.com
+
+### Jawaban
+Pada script di node Eden (hanya dijalankan sekali diawal)
+```bash
+    apt-get install wget -y
+    apt-get install unzip -y
+
+    mkdir 
+
+    wget 'https://docs.google.com/uc?export=download&id=1q9g6nM85bW5T9f5yoyXtDqonUKKCHOTV' -O 'eden.wise.zip'
+    wget 'https://docs.google.com/uc?export=download&id=1bgd3B6VtDtVv2ouqyM8wLyZGzK5C9maT' -O 'strix.operation.wise.zip'
+    wget 'https://docs.google.com/uc?export=download&id=1S0XhL9ViYN7TyCj2W66BNEXQD2AAAw2e' -O 'wise.zip'
+
+    unzip eden.wise.zip
+    unzip strix.operation.wise.zip
+    unzip wise.zip
+```
+
+Edit file `/etc/bind/wise/wise.f11.com` ubah menjadi IP Eden
+
+![image](images/8-1.png)
+
+Install apache2 dan php di Berlint dan Eden, kemudian pada Eden copy `/etc/apache2/sites-available/000-default.conf` ke folder `webserver/wise.f11.com.conf` pada root Eden, sebelumnya buat dulu folder webserver-nya. Lalu edit isinya
+
+![image](images/8-2.png)
+
+lalu copykan ke /etc/apache2/sites-available/wise.f11.com.conf
+
+`cp webserver/wise.f11.com.conf /etc/apache2/sites-available/wise.f11.com.conf`
+
+lalu aktifkan konfigurasi dengan `a2ensite wise.f11.com`
+
+kemudian restart apachenya
+
+`service apache2 restart`
+
+kemudian copy file yang tadi sudah di download ke dalam file `/var/www/`
+
+```bash
+    cp -r wise /var/www/wise.f11.com
+    cp -r eden.wise /var/www/eden.wise.f11.com
+    cp -r strix.operation.wise /var/www/strix.operation.wise.f11.com
+```
+
+Pada node SSS jalankan `lynx www.wise.f11.com`
+
+![image](images/8-3.png)
