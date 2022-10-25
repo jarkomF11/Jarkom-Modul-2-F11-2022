@@ -7,7 +7,102 @@
 | 1 | Ryo Hilmi Ridho  | 5025201192 | 
 | 2 | Moh. Ilham Fakhri Zamzami | 5025201275 |
 | 3 | Putu Andhika Pratama | 5025201132 |
+
+# Jarkom-Modul-2-F11-2022
+
+### Kelompok F11
+
+| **No** | **Nama** | **NRP** | 
+| ------------- | ------------- | --------- |
+| 1 | Ryo Hilmi Ridho  | 5025201192 | 
+| 2 | Moh. Ilham Fakhri Zamzami | 5025201275 |
+| 3 | Putu Andhika Pratama | 5025201132 |
     
+## Script
+file `script.sh` pada root tiap node
+
+- Ostania
+    
+    ```bash
+    #!/bin/bash
+    
+    iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.34.0.0/16
+    ```
+    
+- SSS
+    
+    ```bash
+    #!/bin/bash
+
+    echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+    apt-get update
+    apt-get install lynx -y
+    apt-get install nano -y
+
+    echo nameserver 10.34.2.2 > /etc/resolv.conf
+    echo nameserver 10.34.3.2 >> /etc/resolv.conf
+    ```
+    
+- Garden
+    
+    ```bash
+    #!/bin/bash
+
+    echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+    apt-get install nano -y
+
+    echo nameserver 10.34.2.2 > /etc/resolv.conf
+    echo nameserver 10.34.3.2 > /etc/resolv.conf
+    ```
+    
+- WISE
+    
+    ```bash
+    #!/bin/bash
+
+    echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+    apt-get update
+    apt-get install bind9 -y
+    apt-get install nano -y
+
+    mkdir /etc/bind/wise
+
+    cp named.conf.local /etc/bind/named.conf.local
+    cp wise.f11.com /etc/bind/wise/wise.f11.com
+    cp 2.34.10.in-addr.arpa /etc/bind/wise/2.34.10.in-addr.arpa
+
+    service bind9 restart
+    ```
+
+- Berlint
+    
+    ```bash
+    #!/bin/bash
+
+    echo nameserver 192.168.122.1 > /etc/resolv.conf
+    apt-get update
+    apt-get install bind9 -y
+    apt-get install nano -y
+
+    mkdir /etc/bind/operation
+
+    cp named.conf.local /etc/bind/named.conf.local
+    cp operation.wise.f11.com /etc/bind/operation/operation.wise.f11.com
+
+    service bind9 restart
+    ```
+    
+- Eden
+    
+    ```bash
+    #!/bin/bash
+
+    echo nameserver 192.168.122.1 > /etc/resolv.conf
+    ```
+
 ## Soal 1
 
 ### Soal
@@ -248,3 +343,19 @@ copy kan ke `/etc/bind/operation/operation.wise.f11.com`
 restart bind9 pada WISE dan Berlint, lakukan ping ke `operation.wise.f11.com` dan `www.operation.wise.f11.com`
 
 ![image](images/6-4.png)
+
+## Soal 7
+
+### Soal
+Untuk informasi yang lebih spesifik mengenai Operation Strix, buatlah subdomain melalui Berlint dengan akses strix.operation.wise.yyy.com dengan alias www.strix.operation.wise.yyy.com yang mengarah ke Eden
+
+### Jawaban
+Pada node Berlint edit lagi file `operation.wise.f11.com` pada root WISE dan tambahkan 2 line baru
+
+![image](images/7-1.png)
+
+copy kembali ke `/etc/bind/operation/operation.wise.f11.com`
+
+restart bind9, lakukan ping ke `strix.operation.wise.f11.com` dan `www.strix.operation.wise.f11.com`
+
+![image](images/7-2.png)
