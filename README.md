@@ -435,3 +435,22 @@ kemudian copy file yang tadi sudah di download ke dalam file `/var/www/`
 Pada node SSS jalankan `lynx www.wise.f11.com`
 
 ![image](images/8-3.png)
+
+
+## Soal 9
+
+### Soal
+Setelah itu, Loid juga membutuhkan agar url www.wise.yyy.com/index.php/home dapat menjadi menjadi www.wise.yyy.com/home
+
+### Jawaban
+Pada root Eden edit file `webserver/wise.f11.com.conf`
+
+![image](images/9-1.png)
+
+lalu copy lagi ke /etc/apache2/sites-available/wise.f11.com.conf
+
+`cp webserver/wise.f11.com.conf /etc/apache2/sites-available/wise.f11.com.conf`
+
+restart apache, kemudian pada node SSS jalankan `lynx http://wise.f11.com/home`
+
+![image](images/9-2.png)
