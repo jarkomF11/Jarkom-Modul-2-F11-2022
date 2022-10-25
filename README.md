@@ -51,6 +51,7 @@ file `script.sh` pada root tiap node
 
     ```bash
     #!/bin/bash
+
     echo nameserver 192.168.122.1 > /etc/resolv.conf
 
     apt-get update
@@ -69,13 +70,16 @@ file `script.sh` pada root tiap node
 - Berlint
 
     ```bash
-    #!/bin/bash
+   #!/bin/bash
 
     echo nameserver 192.168.122.1 > /etc/resolv.conf
 
     apt-get update
     apt-get install bind9 -y
     apt-get install nano -y
+    apt-get install apache2 -y
+    apt-get install php -y
+    apt-get install libapache2-mod-php7.0
 
     mkdir /etc/bind/operation
 
@@ -83,13 +87,46 @@ file `script.sh` pada root tiap node
     cp operation.wise.f11.com /etc/bind/operation/operation.wise.f11.com
 
     service bind9 restart
+    service apache2 restart
     ```
 
 - Eden
 
     ```bash
     #!/bin/bash
+
     echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+    apt-get install nano -y
+    apt-get install bind9 -y
+    apt-get install apache2 -y
+    apt-get install php -y
+    apt-get install libapache2-mod-php7.0
+
+    service apache2 start
+    cp webserver/wise.f11.com.conf /etc/apache2/sites-available
+    a2ensite wise.f11.com
+
+    service apache2 restart
+
+    cp -r wise /var/www/wise.f11.com
+    ```
+
+- Eden (hanya dijalankan sekali diawal)
+
+    ```bash
+    #!/bin/bash
+
+    apt-get install wget -y
+    apt-get install unzip -y
+
+    wget 'https://docs.google.com/uc?export=download&id=1q9g6nM85bW5T9f5yoyXtDqonUKKCHOTV' -O 'eden.wise.zip'
+    wget 'https://docs.google.com/uc?export=download&id=1bgd3B6VtDtVv2ouqyM8wLyZGzK5C9maT' -O 'strix.operation.wise.zip'
+    wget 'https://docs.google.com/uc?export=download&id=1S0XhL9ViYN7TyCj2W66BNEXQD2AAAw2e' -O 'wise.zip'
+
+    unzip eden.wise.zip
+    unzip strix.operation.wise.zip
+    unzip wise.zip
     ```
 
 ## Soal 1
@@ -359,8 +396,6 @@ Pada script di node Eden (hanya dijalankan sekali diawal)
 ```bash
     apt-get install wget -y
     apt-get install unzip -y
-
-    mkdir 
 
     wget 'https://docs.google.com/uc?export=download&id=1q9g6nM85bW5T9f5yoyXtDqonUKKCHOTV' -O 'eden.wise.zip'
     wget 'https://docs.google.com/uc?export=download&id=1bgd3B6VtDtVv2ouqyM8wLyZGzK5C9maT' -O 'strix.operation.wise.zip'
