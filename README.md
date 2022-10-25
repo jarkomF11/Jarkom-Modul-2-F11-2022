@@ -105,11 +105,15 @@ file `script.sh` pada root tiap node
 
     service apache2 start
     cp webserver/wise.f11.com.conf /etc/apache2/sites-available
+    cp webserver/eden.wise.f11.com.conf /etc/apache2/sites-available
     a2ensite wise.f11.com
+    a2ensite eden.wise.f11.com
 
     service apache2 restart
 
     cp -r wise /var/www/wise.f11.com
+    cp -r eden.wise /var/www/eden.wise.f11.com
+    cp -r strix.operation.wise /var/www/strix.operation.wise.f11.com
     ```
 
 - Eden (hanya dijalankan sekali diawal)
@@ -454,3 +458,65 @@ lalu copy lagi ke /etc/apache2/sites-available/wise.f11.com.conf
 restart apache, kemudian pada node SSS jalankan `lynx http://wise.f11.com/home`
 
 ![image](images/9-2.png)
+
+## Soal 10
+
+### Soal
+Setelah itu, pada subdomain www.eden.wise.yyy.com, Loid membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/eden.wise.yyy.com
+
+### Jawaban
+Copy file `wise.f11.com.conf` pada folder webserver dengan nama `eden.wise.f11.com.conf`
+
+`cp webserver/wise.f11.com.conf webserver/eden.wise.f11.com.conf`
+
+lalu edit isinya
+
+![image](images/10-1.png)
+
+lalu copy ke /etc/apache2/sites-available/eden.wise.f11.com.conf
+
+`cp webserver/eden.wise.f11.com.conf /etc/apache2/sites-available/eden.wise.f11.com.conf`
+
+lalu aktifkan konfigurasi dengan `a2ensite eden.wise.f11.com`
+
+kemudian restart apachenya
+
+`service apache2 restart`
+
+Pada node SSS jalankan `lynx www.eden.wise.f11.com`
+
+![image](images/10-2.png)
+
+## Soal 11
+
+### Soal
+Akan tetapi, pada folder /public, Loid ingin hanya dapat melakukan directory listing saja
+
+### Jawaban
+Edit file `webserver/eden.wise.f11.com.conf`
+
+![image](images/11-1.png)
+
+copy lagi ke /etc/apache2/sites-available/eden.wise.f11.com.conf
+
+restart apache, pada node SSS jalankan `lynx www.eden.wise.f11.com`
+
+![image](images/11-2.png)
+
+## Soal 12
+
+### Soal
+Tidak hanya itu, Loid juga ingin menyiapkan error file 404.html pada folder /error untuk mengganti error kode pada apache
+
+### Jawaban
+Edit lagi file `webserver/eden.wise.f11.com.conf`
+
+![image](images/12-1.png)
+
+copy lagi ke /etc/apache2/sites-available/eden.wise.f11.com.conf
+
+restart apache, pada node SSS jalankan dengan akhiran sembarang
+
+![image](images/12-3.png)
+
+![image](images/12-2.png)
