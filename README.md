@@ -606,3 +606,34 @@ maka akan diminta untuk memasukkan username dan password
 masukkan username Twilight dan password opStrix
 
 ![image](images/15-4.png)
+
+## Soal 16
+
+### Soal
+setiap kali mengakses IP Eden akan dialihkan secara otomatis ke www.wise.yyy.com
+
+### Jawaban
+Pada node Eden jalankan `a2enmod rewrite` untuk mengaktifkan module rewrite
+
+kemudian restart apache `service apache2 restart`
+
+buat file baru dengan perintah `nano /var/www/wise.f11.com/.htaccess`
+
+isi dengan kode berikut
+```
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^10\.34\.3\.3$
+RewriteRule ^(.*)$ http://www.wise.f11.com/$1 [L,R=301]
+```
+
+![image](images/16-1.png)
+
+Edit isi dari `/etc/apache2/sites-available/000-default.conf` menjadi
+
+![image](images/16-2.png)
+
+Kemudian, restard apachenya dengan `service apache2 restart` dan coba jalankan `lynx 10.34.3.3` pada node SSS
+
+dan didapatkan hasil sebagai berikut
+![image](images/16-3.png)
