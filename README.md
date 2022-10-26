@@ -417,7 +417,7 @@ Edit file `/etc/bind/wise/wise.f11.com` ubah menjadi IP Eden
 
 ![image](images/8-1.png)
 
-Install apache2 dan php di Berlint dan Eden, kemudian pada Eden copy `/etc/apache2/sites-available/000-default.conf` ke folder `webserver/wise.f11.com.conf` pada root Eden, sebelumnya buat dulu folder webserver-nya. Lalu edit isinya
+Install apache2 dan php di Eden, kemudian pada Eden copy `/etc/apache2/sites-available/000-default.conf` ke folder `webserver/wise.f11.com.conf` pada root Eden, sebelumnya buat dulu folder webserver-nya. Lalu edit isinya
 
 ![image](images/8-2.png)
 
