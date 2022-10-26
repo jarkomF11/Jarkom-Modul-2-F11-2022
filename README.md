@@ -637,3 +637,30 @@ Kemudian, restard apachenya dengan `service apache2 restart` dan coba jalankan `
 
 dan didapatkan hasil sebagai berikut
 ![image](images/16-3.png)
+
+## Soal 17
+
+### Soal
+Karena website www.eden.wise.yyy.com semakin banyak pengunjung dan banyak modifikasi sehingga banyak gambar-gambar yang random, maka Loid ingin mengubah request gambar yang memiliki substring “eden” akan diarahkan menuju eden.png. Bantulah Agent Twilight dan Organisasi WISE menjaga perdamaian!
+
+### Jawaban
+Pada node Eden jalankan `a2enmod rewrite` untuk mengaktifkan module rewrite
+
+buat file baru dengan perintah `nano /var/www/eden.wise.f11.com/.htaccess`
+
+isi dengan kode berikut
+```
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_URI} ^/public/images/(.*)eden(.*)
+RewriteRule .* http://www.eden.wise.f11.com/public/images/eden.png [L,R=301
+```
+Edit isi dari `/etc/apache2/sites-available/000-default.conf` menjadi
+![image](images/16-2.png)
+
+kemudian restart apache `service apache2 restart`
+
+Jalankan `lynx www.eden.wise.f11.com/public/images/not-eden.png`
+
+dan didapatkan hasil sebagai berikut
+![image](https://cdn.discordapp.com/attachments/755737092507566270/1034836835630841876/unknown.png)
