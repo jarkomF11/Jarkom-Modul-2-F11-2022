@@ -70,16 +70,13 @@ file `script.sh` pada root tiap node
 - Berlint
 
     ```bash
-   #!/bin/bash
+    #!/bin/bash
 
     echo nameserver 192.168.122.1 > /etc/resolv.conf
 
     apt-get update
     apt-get install bind9 -y
     apt-get install nano -y
-    apt-get install apache2 -y
-    apt-get install php -y
-    apt-get install libapache2-mod-php7.0
 
     mkdir /etc/bind/operation
 
@@ -87,7 +84,6 @@ file `script.sh` pada root tiap node
     cp operation.wise.f11.com /etc/bind/operation/operation.wise.f11.com
 
     service bind9 restart
-    service apache2 restart
     ```
 
 - Eden
@@ -579,7 +575,7 @@ restart apache, jalankan pada node SSS
 
 ![image](images/14-3.png)
 
-## Soal 14
+## Soal 15
 
 ### Soal
 dengan autentikasi username Twilight dan password opStrix dan file di /var/www/strix.operation.wise.yyy
